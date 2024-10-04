@@ -1,0 +1,68 @@
+
+
+
+
+
+
+
+
+
+Linux, Docker and Composer are requirements to run this project
+
+How to install php + composer on linux:
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-ubuntu-20-04
+
+
+
+
+How to install docker on linux:
+
+https://docs.docker.com/engine/install/ubuntu/
+
+sudo apt-get install php-xml
+
+sudo apt-get install php-curl
+
+
+
+docker exec -it weather-php bash
+
+
+
+
+docker-compose build
+
+docker-compose up
+
+docker exec weather-php composer create-project laravel/laravel .
+
+docker exec weather-php composer require laravel/breeze --dev
+
+docker exec weather-php php artisan breeze:install api
+
+docker exec weather-php composer update
+
+docker exec weather-php php artisan migrate
+
+docker exec weather-php php artisan db:seed
+
+#docker exec weather-php php artisan config:cache
+
+#docker exec weather-php npm install
+
+#docker exec weather-php npm run dev
+
+docker exec weather-php php artisan make:controller WeatherController
+
+http://localhost:8080
+
+
+
+to remove volume and reeinstall
+
+docker-compose down
+
+docker volume ls
+
+docker volume rm api_weather-volume
