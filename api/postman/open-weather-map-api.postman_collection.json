@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "14fde28c-7bb4-4551-9548-3cfa648cd48d",
+		"name": "open-weather-map-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19444354"
+	},
+	"item": [
+		{
+			"name": "/data/2.5/weather",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.openweathermap.org/data/2.5/weather?q=sao paulo,brasil&appid={{apiKey}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "sao paulo,brasil"
+						},
+						{
+							"key": "appid",
+							"value": "{{apiKey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiKey",
+			"value": "f4b5f1ac52382447b5a83c3b6518eba9",
+			"type": "string"
+		}
+	]
+}

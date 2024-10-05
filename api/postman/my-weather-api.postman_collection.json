@@ -1,0 +1,278 @@
+{
+	"info": {
+		"_postman_id": "4e09f78f-b300-4ade-b566-caea51c674db",
+		"name": "my-weather-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19444354"
+	},
+	"item": [
+		{
+			"name": "/sanctum/csrf-cookie",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/sanctum/csrf-cookie",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"sanctum",
+						"csrf-cookie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "gl-lessa@hotmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{apiUrl}}/login",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/logout",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{apiUrl}}/logout",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{apiUrl}}/api/user",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/forecast/list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{apiUrl}}/api/forecast/list",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"forecast",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/forecast",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{apiUrl}}/api/forecast?city=rio do sul&country=br",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"forecast"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "rio do sul"
+						},
+						{
+							"key": "country",
+							"value": "br"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/forecast",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{apiUrl}}/api/forecast/:uuid",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"forecast",
+						":uuid"
+					],
+					"variable": [
+						{
+							"key": "uuid",
+							"value": "9df49acd-a849-4f7c-99f2-785feb10d2a9"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"const jar = pm.cookies.jar();",
+					"",
+					"const webUrl = pm.variables.get(\"webUrl\");",
+					"",
+					"jar.get(webUrl, \"XSRF-TOKEN\", (err, cookie) => {",
+					"",
+					"    console.log(err, cookie);",
+					"",
+					"    pm.request.addHeader({",
+					"        key: \"X-XSRF-TOKEN\",",
+					"        value: cookie",
+					"    })",
+					"",
+					"    pm.request.addHeader({",
+					"        key: \"Referer\",",
+					"        value: webUrl",
+					"    })",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "webUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
