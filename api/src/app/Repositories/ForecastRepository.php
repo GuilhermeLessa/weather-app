@@ -19,15 +19,6 @@ class ForecastRepository implements ForecastRepositoryInterface
             ->count();
     }
 
-    /*public function hasSomeActive(string $city, string $country): bool
-    {
-        return ForecastModel::where('user_id', Auth::id())
-            ->where('city', $city)
-            ->where('country', $country)
-            ->where('active', true)
-            ->count() > 0;
-    }*/
-
     public function inactivateAll(string $city, string $country): void
     {
         ForecastModel::where('user_id', Auth::id())

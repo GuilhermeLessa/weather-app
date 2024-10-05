@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Collection;
 interface ForecastRepositoryInterface
 {
     public function countActives(): int;
-    //public function hasSomeActive(string $city, string $country): bool;
     public function inactivateAll(string $city, string $country): void;
     public function findFirst(string $uuid): ForecastModel | null;
     

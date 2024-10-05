@@ -13,6 +13,7 @@ class OpenWeatherResponse implements WeatherResponseInterface
     private readonly string $city;
     private readonly string $country;
     private readonly string $description;
+    private readonly string $icon;
     private readonly string $temperature;
     private readonly string $minimumTemperature;
     private readonly string $maximumTemperature;
@@ -26,6 +27,7 @@ class OpenWeatherResponse implements WeatherResponseInterface
             $this->city = $this->data['name'];
             $this->country = $this->data['sys']['country'];
             $this->description = $this->data['weather'][0]['description'];
+            $this->icon = OpenWeatherIcons::url($this->data['weather'][0]['icon']);
             $this->temperature = $this->data['main']['temp'];
             $this->minimumTemperature = $this->data['main']['temp_min'];
             $this->maximumTemperature = $this->data['main']['temp_max'];
@@ -57,6 +59,7 @@ class OpenWeatherResponse implements WeatherResponseInterface
             'city' => $this->city,
             'country' => $this->country,
             'description' => $this->description,
+            'icon' => $this->icon,
             'temperature' => $this->temperature,
             'minimumTemperature' => $this->minimumTemperature,
             'maximumTemperature' => $this->maximumTemperature,
