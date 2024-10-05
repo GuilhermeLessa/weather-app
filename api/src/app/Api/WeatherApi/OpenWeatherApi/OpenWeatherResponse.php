@@ -4,32 +4,64 @@ namespace App\Api\WeatherApi\OpenWeatherApi;
 
 use Exception;
 
-use App\Api\WeatherApi\WeatherResponseInterface;
-use App\Api\WeatherApi\OpenWeatherApi\Exceptions\MalformedForecastData;
+use App\Api\WeatherApi\Interfaces\WeatherResponseInterface;
+use App\Api\WeatherApi\Exceptions\MalformedResponseData;
 
 class OpenWeatherResponse implements WeatherResponseInterface
 {
-    function __construct(private mixed $data) {}
 
-    public function getData(): mixed
+    private readonly string $city;
+    private readonly string $country;
+    private readonly string $description;
+    private readonly string $temperature;
+    private readonly string $minimumTemperature;
+    private readonly string $maximumTemperature;
+    private readonly string $humidity;
+    private readonly string $wind;
+
+    function __construct(
+        private readonly array $data
+    ) {
+        try {
+            $this->city = $this->data['name'];
+            $this->country = $this->data['sys']['country'];
+            $this->description = $this->data['weather'][0]['description'];
+            $this->temperature = $this->data['main']['temp'];
+            $this->minimumTemperature = $this->data['main']['temp_min'];
+            $this->maximumTemperature = $this->data['main']['temp_max'];
+            $this->humidity = $this->data['main']['humidity'];
+            $this->wind = $this->data['wind']['speed'];
+        } catch (Exception $e) {
+            throw new MalformedResponseData("Malformed weather data");
+        }
+    }
+
+    public function getCity(): string
+    {
+        return $this->city;
+    }
+
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    public function getData(): array
     {
         return $this->data;
     }
 
     public function toArray(): array
     {
-        try {
-            return [
-                'description' => $this->data['weather'][0]['description'],
-                'temperature' => $this->data['main']['temp'],
-                'minimumTemperature' => $this->data['main']['temp_min'],
-                'maximumTemperature' => $this->data['main']['temp_max'],
-                'humidity' => $this->data['main']['humidity'],
-                'wind' => $this->data['wind']['speed'],
-                'city' => $this->data['name']
-            ];
-        } catch (Exception $e) {
-            throw new MalformedForecastData();
-        }
+        return [
+            'city' => $this->city,
+            'country' => $this->country,
+            'description' => $this->description,
+            'temperature' => $this->temperature,
+            'minimumTemperature' => $this->minimumTemperature,
+            'maximumTemperature' => $this->maximumTemperature,
+            'humidity' => $this->humidity,
+            'wind' => $this->wind
+        ];
     }
 }

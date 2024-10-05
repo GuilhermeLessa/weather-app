@@ -5,12 +5,11 @@ namespace App\Api\WeatherApi\OpenWeatherApi;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
-use App\Api\WeatherApi\WeatherApiInterface;
-use App\Api\WeatherApi\WeatherResponseInterface;
-use App\Api\WeatherApi\OpenWeatherApi\Exceptions\CityIsNotDefined;
-use App\Api\WeatherApi\OpenWeatherApi\Exceptions\CityNotFound;
-use App\Api\WeatherApi\OpenWeatherApi\Exceptions\CountryIsNotDefined;
-use App\Api\WeatherApi\OpenWeatherApi\Exceptions\StateIsNotDefined;
+use App\Api\WeatherApi\Interfaces\WeatherApiInterface;
+use App\Api\WeatherApi\Interfaces\WeatherResponseInterface;
+use App\Api\WeatherApi\Exceptions\CityIsNotDefined;
+use App\Api\WeatherApi\Exceptions\CityNotFound;
+use App\Api\WeatherApi\Exceptions\CountryIsNotDefined;
 
 class OpenWeatherApi implements WeatherApiInterface
 {
@@ -23,29 +22,24 @@ class OpenWeatherApi implements WeatherApiInterface
 
     function getWeather(
         string $city,
-        string $state,
         string $country,
         string $customResponseTransformer = null
     ): OpenWeatherResponse {
         if (empty($city)) {
-            throw new CityIsNotDefined();
-        }
-
-        if (empty($state)) {
-            throw new StateIsNotDefined();
+            throw new CityIsNotDefined("City is not defined");
         }
 
         if (empty($country)) {
-            throw new CountryIsNotDefined();
+            throw new CountryIsNotDefined("Country is not defined");
         }
 
         /**
          * @var Response
          */
-        $response = $this->get("/weather?q={$city},{$state},{$country}");
+        $response = $this->get("/weather?q={$city},{$country}");
 
         if ($response->status() === 404) {
-            throw new CityNotFound();
+            throw new CityNotFound("City not found");
         }
 
         if ($customResponseTransformer) {

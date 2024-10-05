@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Api\WeatherApi;
+namespace App\Api\WeatherApi\Interfaces;
 
 interface WeatherApiInterface
 {
     public function getWeather(
-        string $city, string $state, string $country,
+        string $city,
+        string $country,
         string $customResponseTransformer = null
     ): WeatherResponseInterface;
 }

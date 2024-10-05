@@ -26,6 +26,7 @@ sudo apt-get install php-curl
 
 
 
+
 docker exec -it weather-php bash
 
 
@@ -55,6 +56,16 @@ docker exec weather-php php artisan db:seed
 
 docker exec weather-php php artisan make:controller WeatherController
 
+
+
+docker exec weather-php php artisan make:migration create_forecast_table
+
+docker exec weather-php php artisan migrate:rollback --step=1
+
+docker exec weather-php php artisan make:model Forecast
+
+docker exec weather-php php artisan migrate:reset
+
 http://localhost:8080
 
 
@@ -66,3 +77,13 @@ docker-compose down
 docker volume ls
 
 docker volume rm api_weather-volume
+
+
+
+
+
+TODO:
+
+    implementar testes
+    implementar log quando erro exception generica
+    pq rota de delete nao cai no catch?
