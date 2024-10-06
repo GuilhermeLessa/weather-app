@@ -86,4 +86,4 @@ TODO:
 
     implementar testes
     implementar log quando erro exception generica
-    pq rota de delete nao cai no catch?
+    criar server statico pro frontend (nao servir mais dev)

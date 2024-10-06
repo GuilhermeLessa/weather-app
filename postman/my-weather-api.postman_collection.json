@@ -110,6 +110,41 @@
 			"response": []
 		},
 		{
+			"name": "/authenticated",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{apiUrl}}/authenticated",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"authenticated"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/api/user",
 			"request": {
 				"method": "GET",
@@ -271,7 +306,7 @@
 		},
 		{
 			"key": "webUrl",
-			"value": "http://localhost:3000",
+			"value": "http://localhost:5173",
 			"type": "string"
 		}
 	]
