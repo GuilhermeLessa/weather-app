@@ -26,11 +26,11 @@ class OpenWeatherApi implements WeatherApiInterface
         string $customResponseTransformer = null
     ): OpenWeatherResponse {
         if (empty($city)) {
-            throw new CityIsNotDefined("City is not defined");
+            throw new CityIsNotDefined("City is not defined.");
         }
 
         if (empty($country)) {
-            throw new CountryIsNotDefined("Country is not defined");
+            throw new CountryIsNotDefined("Country is not defined.");
         }
 
         /**
@@ -39,7 +39,7 @@ class OpenWeatherApi implements WeatherApiInterface
         $response = $this->get("/weather?q={$city},{$country}");
 
         if ($response->status() === 404) {
-            throw new CityNotFound("City not found");
+            throw new CityNotFound("City not found.");
         }
 
         if ($customResponseTransformer) {
@@ -62,7 +62,7 @@ class OpenWeatherApi implements WeatherApiInterface
         /**
          * @var Response
          */
-        $response = Http::get("{$this->baseUrl}{$url}&appid={$this->apiKey}");
+        $response = Http::get("{$this->baseUrl}{$url}&appid={$this->apiKey}&units=imperial");
         return $response;
     }
 }

@@ -1,4 +1,4 @@
-import type { Either } from "@/domain/shared/Either";
+import type { Either } from "@/application/shared/Either";
 import type { HttpErrorResponse, InternalServerError, NoContent, OK, Unauthorized } from "../http/HttpClient";
 
 export default interface WeatherApiInterface {
@@ -45,7 +45,7 @@ export default interface WeatherApiInterface {
         >
     >;
 
-    inactiveForecast(uuid: string): Promise<
+    inactivateForecast(uuid: string): Promise<
         Either<
             Unauthorized | InternalServerError | HttpErrorResponse,
             NoContent

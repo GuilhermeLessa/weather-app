@@ -5,7 +5,7 @@ namespace App\Api\WeatherApi\OpenWeatherApi;
 class OpenWeatherIcons
 {
     const BASE_URL = "https://openweathermap.org/img/wn/";
-    const FILE_EXT = ".png";
+    const FILE_EXT = "@4x.png";
 
     static function url(string $iconFileName): string
     {

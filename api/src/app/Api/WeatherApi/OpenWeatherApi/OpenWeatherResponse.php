@@ -34,7 +34,7 @@ class OpenWeatherResponse implements WeatherResponseInterface
             $this->humidity = $this->data['main']['humidity'];
             $this->wind = $this->data['wind']['speed'];
         } catch (Exception $e) {
-            throw new MalformedResponseData("Malformed weather data");
+            throw new MalformedResponseData("Malformed weather data.");
         }
     }
 

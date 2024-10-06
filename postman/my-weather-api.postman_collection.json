@@ -205,7 +205,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{apiUrl}}/api/forecast?city=rio do sul&country=br",
+					"raw": "{{apiUrl}}/api/forecast?city=Philadelphia&country=us",
 					"host": [
 						"{{apiUrl}}"
 					],
@@ -216,11 +216,11 @@
 					"query": [
 						{
 							"key": "city",
-							"value": "rio do sul"
+							"value": "Philadelphia"
 						},
 						{
 							"key": "country",
-							"value": "br"
+							"value": "us"
 						}
 					]
 				}

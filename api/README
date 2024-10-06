@@ -85,5 +85,11 @@ docker volume rm api_weather-volume
 TODO:
 
     implementar testes
+    opcao tamanho dos icones
     implementar log quando erro exception generica
+
+    front:
     criar server statico pro frontend (nao servir mais dev)
+    separar view principal auth no frontend (logout button geral nela)
+    usar stateles, so buscar lista se clicar em refresh button
+    opcao pra definir unidade de medida das temp (units=metric) https://openweathermap.org/current#data

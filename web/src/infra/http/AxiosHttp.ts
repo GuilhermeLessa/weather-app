@@ -1,7 +1,7 @@
 import axios from "axios";
 import type HttpClient from "../../application/http/HttpClient";
 import { Unauthorized, UnprocessableEntity, InternalServerError, HttpErrorResponse, HttpSuccesResponse, OK, NoContent } from "../../application/http/HttpClient";
-import { left, right, type Either } from "@/domain/shared/Either";
+import { left, right, type Either } from "@/application/shared/Either";
 
 export default class AxiosHttp implements HttpClient {
 
@@ -25,7 +25,7 @@ export default class AxiosHttp implements HttpClient {
             OK | NoContent | HttpSuccesResponse
         >
     > {
-        return this.request('get', url, options);
+        return this.request('get', url, undefined, options);
     }
 
     post(url: string, body?: any, options?: { params: any }): Promise<
@@ -43,7 +43,7 @@ export default class AxiosHttp implements HttpClient {
             OK | NoContent | HttpSuccesResponse
         >
     > {
-        return this.request('delete', url, options);
+        return this.request('delete', url, undefined, options);
     }
 
     private async request(method: string, url: string, body?: any, options?: { params: any }): Promise<

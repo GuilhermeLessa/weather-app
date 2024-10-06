@@ -1,5 +1,5 @@
 import type UseCase from "./UseCase";
-import { left, right, type Either } from "../../domain/shared/Either";
+import { left, right, type Either } from "../../application/shared/Either";
 import type WeatherApiInterface from "../weather-api/WeatherApiInterface";
 import type { HttpErrorResponse, Unauthorized } from "../http/HttpClient";
 

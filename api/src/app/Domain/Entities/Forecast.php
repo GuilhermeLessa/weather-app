@@ -52,15 +52,15 @@ class Forecast
     private function validate()
     {
         if ($this->forecastRepository->countActives() >= self::MAX_FORECAST_CACHE_LENGTH) {
-            throw new MaximumForecastReached("Maximum number of forecast reached");
+            throw new MaximumForecastReached("Maximum number of forecast reached.");
         }
 
         if (empty($this->city)) {
-            throw new CityIsNotDefined("City is not defined");
+            throw new CityIsNotDefined("City is not defined.");
         }
 
         if (empty($this->country)) {
-            throw new CountryIsNotDefined("Country is not defined");
+            throw new CountryIsNotDefined("Country is not defined.");
         }
     }
 

@@ -1,4 +1,4 @@
-import type { Either } from "@/domain/shared/Either";
+import type { Either } from "@/application/shared/Either";
 
 export default interface HttpClient {
     get(url: string, options?: any)

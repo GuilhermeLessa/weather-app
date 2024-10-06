@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { onBeforeMount, inject, ref } from "vue";
+import { inject, ref } from "vue";
 import Toaster from "../components/Toaster/Toaster.vue";
 import Login, { LoginInput } from "../../application/usecase/Login";
-import CheckIsAuthenticated from "../../application/usecase/CheckIsAuthenticated";
 
 const router = useRouter();
 const toaster: Toaster = ref();
@@ -22,16 +21,15 @@ async function onClickLogin() {
     }
 
     const error = authenticationResult.value;
-    toaster.value.error(error.message || "Authentication error");
+    toaster.value.error(error.message || "Authentication error.");
 }
 </script>
 
 <template>
     <div data-bs-theme="dark">
         <div class="container mt-5">
-            <h1>Weather</h1>
-            <h6 class="mb-5">Forecast information</h6>
-            <form>
+            <h1 class="mb-3">Weather</h1>
+            <form @submit.prevent>
                 <div class="form-group">
                     <input type="text" class="form-control" rows="3" placeholder="Email" v-model="email" />
                 </div>
@@ -45,8 +43,8 @@ async function onClickLogin() {
                 </div>
             </form>
         </div>
-        <Toaster ref="toaster"></Toaster>
     </div>
+    <Toaster ref="toaster"></Toaster>
 </template>
 
 <style scoped>

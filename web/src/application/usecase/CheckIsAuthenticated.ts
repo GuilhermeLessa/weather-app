@@ -1,4 +1,4 @@
-import { right, type Either, left } from "@/domain/shared/Either";
+import { right, type Either, left } from "@/application/shared/Either";
 import type UseCase from "./UseCase";
 import type WeatherApiInterface from "../weather-api/WeatherApiInterface";
 

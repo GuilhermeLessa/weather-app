@@ -36,6 +36,7 @@ class ForecastController extends Controller
 
             $list = ((object) $forecasts)->map(fn($forecast) => [
                 'uuid' => $forecast->uuid,
+                'created_at' => $forecast->created_at,
                 ...(new OpenWeatherResponse($forecast->weather_data))->toArray()
             ]);
 
@@ -77,6 +78,7 @@ class ForecastController extends Controller
 
             return response()->json([
                 'uuid' => $forecastModel->uuid,
+                'created_at' => $forecastModel->created_at,
                 ...$weatherResponse->toArray()
             ]);
         } catch (WeatherApiException $e) {

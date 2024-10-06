@@ -1,7 +1,7 @@
 import type WeatherApiInterface from "../../application/weather-api/WeatherApiInterface";
 import type HttpClient from "@/application/http/HttpClient";
 import { HttpErrorResponse, InternalServerError, NoContent, OK, Unauthorized, UnprocessableEntity, type HttpSuccesResponse } from "@/application/http/HttpClient";
-import { type Either } from "@/domain/shared/Either";
+import { type Either } from "@/application/shared/Either";
 
 export default class WeatherApi implements WeatherApiInterface {
 
@@ -72,7 +72,7 @@ export default class WeatherApi implements WeatherApiInterface {
         return this.httpClient.get("/api/forecast/list");
     }
 
-    inactiveForecast(uuid: string): Promise<
+    inactivateForecast(uuid: string): Promise<
         Either<
             Unauthorized | InternalServerError | HttpErrorResponse,
             NoContent
