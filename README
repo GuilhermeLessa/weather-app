@@ -27,7 +27,18 @@ Users to login and test:
 
        email:        gl-lessa@hotmail.com
        password:     123456
+
+
+
+# Running automated tests
+
+       After run up the backend containers, run this command on CLI:
+
+              docker exec weather-php php artisan test
        
+       Know that tests will erase all database, to recover state just run seeds again:
+
+              docker exec weather-php php artisan db:seed
 
 
 If something gets wrong you must clean all to try reinstall:
@@ -105,6 +116,7 @@ If something gets wrong you must clean all to try reinstall:
               back:
               opcao tamanho dos icones
               salvar log quando erro exception generica
+              habilitar test coverage: php artisan test --coverage
 
               front:
               criar server statico pro frontend (nao servir como dev)

@@ -14,8 +14,8 @@ class Forecast
 {
     private WeatherResponseInterface $wheaterResponse;
     private ForecastModel $modelSaved;
-
-    const MAX_FORECAST_CACHE_LENGTH = 3;
+    
+    private const MAX_FORECAST_CACHE_LENGTH = 3;
 
     function __construct(
         private WeatherApiInterface $weatherApi,

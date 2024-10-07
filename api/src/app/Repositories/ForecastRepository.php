@@ -12,16 +12,23 @@ use Illuminate\Database\Eloquent\Collection;
 class ForecastRepository implements ForecastRepositoryInterface
 {
 
+    function __construct(private $userId = null)
+    {
+        if ($this->userId === null) {
+            $this->userId = Auth::id();
+        }
+    }
+
     public function countActives(): int
     {
-        return ForecastModel::where('user_id', Auth::id())
+        return ForecastModel::where('user_id', $this->userId)
             ->where('active', true)
             ->count();
     }
 
     public function inactivateAll(string $city, string $country): void
     {
-        ForecastModel::where('user_id', Auth::id())
+        ForecastModel::where('user_id', $this->userId)
             ->where('city', $city)
             ->where('country', $country)
             ->where('active', true)
@@ -30,7 +37,7 @@ class ForecastRepository implements ForecastRepositoryInterface
 
     public function findFirst(string $uuid): ForecastModel | null
     {
-        return ForecastModel::where('user_id', Auth::id())
+        return ForecastModel::where('user_id', $this->userId)
             ->where('uuid', $uuid)
             ->first();
     }
@@ -40,7 +47,7 @@ class ForecastRepository implements ForecastRepositoryInterface
      */
     public function findAllActives(): Collection
     {
-        return ForecastModel::where('user_id', Auth::id())
+        return ForecastModel::where('user_id', $this->userId)
             ->where('active', true)
             ->orderByDesc('id')
             ->get();
@@ -49,7 +56,7 @@ class ForecastRepository implements ForecastRepositoryInterface
     public function save(WeatherResponseInterface $weatherResponse): ForecastModel
     {
         $forecast = new ForecastModel();
-        $forecast->user_id = Auth::id();
+        $forecast->user_id = $this->userId;
         $forecast->city = $weatherResponse->getCity();
         $forecast->country = $weatherResponse->getCountry();
         $forecast->weather_data = $weatherResponse->getData();

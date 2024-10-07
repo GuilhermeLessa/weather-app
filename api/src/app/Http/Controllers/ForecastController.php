@@ -17,12 +17,12 @@ use Illuminate\Http\Response;
 
 class ForecastController extends Controller
 {
-    private OpenWeatherApi $api;
+    private OpenWeatherApi $weatherApi;
     private ForecastRepository $forecastRepository;
 
     function __construct()
     {
-        $this->api = new OpenWeatherApi(env("OPEN_WEATHER_MAP_API_KEY"));
+        $this->weatherApi = new OpenWeatherApi(env("OPEN_WEATHER_MAP_API_KEY"));
         $this->forecastRepository = new ForecastRepository();
     }
 
@@ -59,7 +59,7 @@ class ForecastController extends Controller
 
         try {
             $forecast = new Forecast(
-                $this->api,
+                $this->weatherApi,
                 $this->forecastRepository,
                 $city,
                 $country,
