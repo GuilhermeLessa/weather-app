@@ -19,14 +19,25 @@
 
 
 
-That's all you need to access the application on browser: http://localhost:5173
-Users to login and test:
+# Ready to go
 
-       email:        admin@admin.com
-       password:     123456
+       That's all you need to access the application on browser: http://localhost:5173
+       Users to login and test:
 
-       email:        gl-lessa@hotmail.com
-       password:     123456
+              email:        admin@admin.com
+              password:     123456
+
+              email:        gl-lessa@hotmail.com
+              password:     123456
+
+
+
+# Reeinstall if its necessary
+
+       If something gets wrong you must clean all to try reinstall:
+
+              docker-compose down
+              docker volume rm api_weather-volume
 
 
 
@@ -41,10 +52,72 @@ Users to login and test:
               docker exec weather-php php artisan db:seed
 
 
-If something gets wrong you must clean all to try reinstall:
 
-       docker-compose down
-       docker volume rm api_weather-volume
+# TODO improvements:
+
+       BACK:
+       Improve test cases with mock and fakes
+       Manage api version endpoints (exe: /api/v1)
+       Icons size as parameter
+       Metrical units as a parameter (units=metric) https://openweathermap.org/current#data
+       Record log of errors on database
+       Enable test coverage stats: php artisan test --coverage
+       Improve exceptions controll on weather api side (401, invalid key, etc)
+       Create isolated tests of weather api and check types (pure gets without adapters)
+       Set test cases order (weather response > api > forecast)
+       Preserve type temperatures as decimal
+       Improve validators on test cases (exe required, etc)
+       Ignore case when find for city/country on database (lowercase)
+       Add laravel validator on weather response transformer (malformed data)
+       Use assertCount instead of count on test cases
+
+       FRONT:
+       Build a static website server instead of launch dev instance
+       Separate a main view to auth routes and include general components (logout button/container)
+       Implement stateless data, only reach backend if clicks on refresh button
+       Redirect not found urls typed on browser bar
+       Remove seconds of time format on view
+       Improve return types, either and error controlling of weather api adapter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -109,25 +182,3 @@ If something gets wrong you must clean all to try reinstall:
               docker exec weather-php php artisan migrate:rollback --step=1
 
               docker exec weather-php php artisan migrate:reset
-
-
-       TODO drafts:
-
-              back:
-              opcao tamanho dos icones
-              salvar log quando erro exception generica
-              habilitar test coverage: php artisan test --coverage
-              melhorar get weatherApi, mais generico e com destructuring de params
-              implementar tratamentos api open weather (401 invalid key, etc)
-              criar testes isolados apenas pra api (request pura sem weatherResponse)
-              definir ordem de execucao dos testes (response > api > forecast), parar no primeiro?
-              tipar as temperaturas do response como decimal
-              melhorar os validators dos testes (exe: required, etc)
-
-              front:
-              criar server statico pro frontend (nao servir como dev)
-              separar view principal auth (logout button e um container)
-              usar stateles, so buscar lista se clicar em refresh button
-              opcao pra definir unidade de medida (units=metric) https://openweathermap.org/current#data
-              redireciopnar caso digitar uma url nao existente
-              arrumar time created do frontend

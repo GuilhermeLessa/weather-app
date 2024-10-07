@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Domain;
 
 use App\Api\WeatherApi\Exceptions\CityNotFound;
 use App\Api\WeatherApi\OpenWeatherApi\OpenWeatherApi;
@@ -181,7 +181,7 @@ class ForecastEntityTest extends TestCase
             'city' => 'string',
             'country' => 'string',
             'description' => 'string',
-            'icon' => 'string',
+            'icon' => 'url',
             'temperature' => 'decimal:0,2',
             'minimumTemperature' => 'decimal:0,2',
             'maximumTemperature' => 'decimal:0,2',
@@ -240,5 +240,4 @@ class ForecastEntityTest extends TestCase
         $this->assertEquals($country, $originalData['sys']['country']);
         $this->assertEquals($country, $transformedData['country']);
     }
-    
 }

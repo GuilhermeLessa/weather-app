@@ -75,7 +75,7 @@ class OpenWeatherResponseTest extends TestCase
             'city' => 'string',
             'country' => 'string',
             'description' => 'string',
-            'icon' => 'string',
+            'icon' => 'url',
             'temperature' => 'decimal:0,2',
             'minimumTemperature' => 'decimal:0,2',
             'maximumTemperature' => 'decimal:0,2',
@@ -121,5 +121,4 @@ class OpenWeatherResponseTest extends TestCase
         $url = "/weather?q={$city},{$country}";
         return Http::get("{$baseUrl}{$url}&appid={$apiKey}&units=imperial");
     }
-    
 }

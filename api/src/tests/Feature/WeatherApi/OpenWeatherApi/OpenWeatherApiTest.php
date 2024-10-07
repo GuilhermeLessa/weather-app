@@ -99,7 +99,7 @@ class OpenWeatherApiTest extends TestCase
             'city' => 'string',
             'country' => 'string',
             'description' => 'string',
-            'icon' => 'string',
+            'icon' => 'url',
             'temperature' => 'decimal:0,2',
             'minimumTemperature' => 'decimal:0,2',
             'maximumTemperature' => 'decimal:0,2',
@@ -114,7 +114,7 @@ class OpenWeatherApiTest extends TestCase
     {
         $weatherApi = new OpenWeatherApi(env("OPEN_WEATHER_MAP_API_KEY"));
         $weatherResponse = $weatherApi->getWeather("New York", "US");
-        
+
         $originalData = $weatherResponse->getData();
         $transformedData = $weatherResponse->toArray();
         $city = $weatherResponse->getCity();
@@ -128,7 +128,7 @@ class OpenWeatherApiTest extends TestCase
     {
         $weatherApi = new OpenWeatherApi(env("OPEN_WEATHER_MAP_API_KEY"));
         $weatherResponse = $weatherApi->getWeather("New York", "US");
-        
+
         $originalData = $weatherResponse->getData();
         $transformedData = $weatherResponse->toArray();
         $country = $weatherResponse->getCountry();
@@ -137,5 +137,4 @@ class OpenWeatherApiTest extends TestCase
         $this->assertEquals($country, $originalData['sys']['country']);
         $this->assertEquals($country, $transformedData['country']);
     }
-
 }

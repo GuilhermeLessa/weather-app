@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Repositories;
 
 use App\Api\WeatherApi\OpenWeatherApi\OpenWeatherResponse;
 use App\Models\ForecastModel;
