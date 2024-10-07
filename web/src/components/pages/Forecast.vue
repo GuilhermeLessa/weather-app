@@ -66,6 +66,8 @@ async function inactivate(uuid) {
             )"></LogoutButton>
         </div>
 
+        <h2 class="mb-5">Weather Forecast</h2>
+
         <ForecastForm @onSearch="onSearch"></ForecastForm>
 
         <div class="row">

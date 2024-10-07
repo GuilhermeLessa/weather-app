@@ -4,12 +4,10 @@
        On /api directory run these commands on CLI:
 
               docker-compose build
-
               docker-compose up
-
               docker exec weather-php php artisan migrate
-
               docker exec weather-php php artisan db:seed
+
 
 
 # Running frontend container
@@ -17,17 +15,31 @@
        On /web directory run these commands on CLI:
 
               docker-compose build
-
               docker-compose up
 
-              
-Thats all you need to acces the application on browser: http://localhost:5173
 
-If something get wrong you need clean all to try reinstall:
+
+Thats all you need to acces the application on browser: http://localhost:5173
+Users to login and test:
+
+       email:        admin@admin.com
+       password:     123456
+
+       email:        gl-lessa@hotmail.com
+       password:     123456
+       
+
+
+If something get wrong you must clean all to try reinstall:
 
        docker-compose down
-
        docker volume rm api_weather-volume
+
+
+
+
+
+
 
 
 
@@ -99,14 +111,14 @@ If something get wrong you need clean all to try reinstall:
 
        TODO drafts:
 
-              implementar testes
+              back:
               opcao tamanho dos icones
-              implementar log quando erro exception generica
+              salvar log quando erro exception generica
 
               front:
-              criar server statico pro frontend (nao servir mais dev)
-              separar view principal auth no frontend (logout button geral e um container)
+              criar server statico pro frontend (nao servir como dev)
+              separar view principal auth (logout button e um container)
               usar stateles, so buscar lista se clicar em refresh button
-              opcao pra definir unidade de medida das temp (units=metric) https://openweathermap.org/current#data
-              redireciopnar caso digitar uma url nao existe no front
-              arrumar time created at do frontend
+              opcao pra definir unidade de medida (units=metric) https://openweathermap.org/current#data
+              redireciopnar caso digitar uma url nao existente
+              arrumar time created do frontend
