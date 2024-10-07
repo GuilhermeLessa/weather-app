@@ -1,7 +1,7 @@
 
 # Running backend containers
 
-       On /api directory run these commands on CLI:
+       On /api directory, run these commands on CLI:
 
               docker-compose build
               docker-compose up
@@ -12,14 +12,14 @@
 
 # Running frontend container
 
-       On /web directory run these commands on CLI:
+       On /web directory, run these commands on CLI:
 
               docker-compose build
               docker-compose up
 
 
 
-Thats all you need to acces the application on browser: http://localhost:5173
+That's all you need to access the application on browser: http://localhost:5173
 Users to login and test:
 
        email:        admin@admin.com
@@ -30,7 +30,7 @@ Users to login and test:
        
 
 
-If something get wrong you must clean all to try reinstall:
+If something gets wrong you must clean all to try reinstall:
 
        docker-compose down
        docker volume rm api_weather-volume
@@ -98,15 +98,6 @@ If something get wrong you must clean all to try reinstall:
               docker exec weather-php php artisan migrate:rollback --step=1
 
               docker exec weather-php php artisan migrate:reset
-
-
-       If you need clean all to reeinstall:
-
-              docker-compose down
-              
-              docker volume ls
-
-              docker volume rm api_weather-volume
 
 
        TODO drafts:
