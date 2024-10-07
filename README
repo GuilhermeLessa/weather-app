@@ -1,0 +1,112 @@
+
+# Running backend containers
+
+       On /api directory run these commands on CLI:
+
+              docker-compose build
+
+              docker-compose up
+
+              docker exec weather-php php artisan migrate
+
+              docker exec weather-php php artisan db:seed
+
+
+# Running frontend container
+
+       On /web directory run these commands on CLI:
+
+              docker-compose build
+
+              docker-compose up
+
+              
+Thats all you need to acces the application on browser: http://localhost:5173
+
+If something get wrong you need clean all to try reinstall:
+
+       docker-compose down
+
+       docker volume rm api_weather-volume
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------
+
+# Useful instructions
+
+       How to install docker on linux:
+
+              https://docs.docker.com/engine/install/ubuntu/
+
+      
+       How to attach on container bash:
+
+              docker exec -it weather-php bash
+
+
+       Steps to install laravel sanctum:
+
+              docker exec weather-php composer create-project laravel/laravel .
+
+              docker exec weather-php php artisan install:api
+
+              docker exec weather-php composer update
+
+              docker exec weather-php php artisan migrate
+
+              docker exec weather-php php artisan db:seed
+
+
+       How manipulate resources on laravel:
+
+              docker exec weather-php php artisan make:controller WeatherController
+
+              docker exec weather-php php artisan make:migration create_forecast_table
+
+              docker exec weather-php php artisan make:model Forecast
+
+              docker exec weather-php php artisan migrate:rollback --step=1
+
+              docker exec weather-php php artisan migrate:reset
+
+
+       If you need clean all to reeinstall:
+
+              docker-compose down
+              
+              docker volume ls
+
+              docker volume rm api_weather-volume
+
+
+       TODO drafts:
+
+              implementar testes
+              opcao tamanho dos icones
+              implementar log quando erro exception generica
+
+              front:
+              criar server statico pro frontend (nao servir mais dev)
+              separar view principal auth no frontend (logout button geral e um container)
+              usar stateles, so buscar lista se clicar em refresh button
+              opcao pra definir unidade de medida das temp (units=metric) https://openweathermap.org/current#data
+              redireciopnar caso digitar uma url nao existe no front
+              arrumar time created at do frontend
