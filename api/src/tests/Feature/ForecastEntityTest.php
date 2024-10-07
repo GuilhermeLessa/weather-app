@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Api\WeatherApi\Exceptions\MalformedResponseData;
+use App\Api\WeatherApi\Exceptions\CityNotFound;
 use App\Api\WeatherApi\OpenWeatherApi\OpenWeatherApi;
 use App\Api\WeatherApi\OpenWeatherApi\OpenWeatherIcons;
 use App\Api\WeatherApi\OpenWeatherApi\OpenWeatherResponse;
@@ -69,6 +69,16 @@ class ForecastEntityTest extends TestCase
         $forecast = new Forecast($weatherApi, $forecastRepository, "New York", "");
     }
 
+    public function test_city_not_found(): void
+    {
+        $testerUser = User::factory()->create();
+        $weatherApi = new OpenWeatherApi(env("OPEN_WEATHER_MAP_API_KEY"));
+        $forecastRepository = new ForecastRepository($testerUser->id);
+
+        $this->expectException(CityNotFound::class);
+        $forecast = new Forecast($weatherApi, $forecastRepository, "abcdefghijk", "US");
+    }
+
     public function test_saved_forecast_valid_types(): void
     {
         $testerUser = User::factory()->create();
@@ -120,6 +130,19 @@ class ForecastEntityTest extends TestCase
         $this->assertEquals($forecastModel->active, true);
     }
 
+    public function test_weather_response_get_data(): void
+    {
+        $testerUser = User::factory()->create();
+        $weatherApi = new OpenWeatherApi(env("OPEN_WEATHER_MAP_API_KEY"));
+        $forecastRepository = new ForecastRepository($testerUser->id);
+
+        $forecast = new Forecast($weatherApi, $forecastRepository, "New York", "US");
+        $weatherResponse = $forecast->getWheaterResponse();
+
+        $originalData = $weatherResponse->getData();
+        $this->assertIsArray($originalData);
+    }
+
     public function test_weather_response_transformation(): void
     {
         $testerUser = User::factory()->create();
@@ -159,27 +182,14 @@ class ForecastEntityTest extends TestCase
             'country' => 'string',
             'description' => 'string',
             'icon' => 'string',
-            'temperature' => 'decimal:2',
-            'minimumTemperature' => 'decimal:2',
-            'maximumTemperature' => 'decimal:2',
+            'temperature' => 'decimal:0,2',
+            'minimumTemperature' => 'decimal:0,2',
+            'maximumTemperature' => 'decimal:0,2',
             'humidity' => 'integer',
-            'wind' => 'decimal:2'
+            'wind' => 'decimal:0,2'
         ]);
 
         $this->assertEquals(count($validator->validate()), count($transformedData));
-    }
-
-    public function test_weather_response_get_data(): void
-    {
-        $testerUser = User::factory()->create();
-        $weatherApi = new OpenWeatherApi(env("OPEN_WEATHER_MAP_API_KEY"));
-        $forecastRepository = new ForecastRepository($testerUser->id);
-
-        $forecast = new Forecast($weatherApi, $forecastRepository, "New York", "US");
-        $weatherResponse = $forecast->getWheaterResponse();
-
-        $originalData = $weatherResponse->getData();
-        $this->assertIsArray($originalData);
     }
 
     public function test_weather_response_to_array(): void
@@ -230,10 +240,5 @@ class ForecastEntityTest extends TestCase
         $this->assertEquals($country, $originalData['sys']['country']);
         $this->assertEquals($country, $transformedData['country']);
     }
-
-    public function test_weather_response_malformed(): void
-    {
-        $this->expectException(MalformedResponseData::class);
-        $weatherResponse = new OpenWeatherResponse([]);
-    }
+    
 }

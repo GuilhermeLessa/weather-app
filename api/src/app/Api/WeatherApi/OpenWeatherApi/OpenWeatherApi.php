@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Http;
 use App\Api\WeatherApi\Interfaces\WeatherApiInterface;
 use App\Api\WeatherApi\Interfaces\WeatherResponseInterface;
 use App\Api\WeatherApi\Exceptions\CityIsNotDefined;
-use App\Api\WeatherApi\Exceptions\CityNotFound;
 use App\Api\WeatherApi\Exceptions\CountryIsNotDefined;
+use App\Api\WeatherApi\Exceptions\CityNotFound;
 
 class OpenWeatherApi implements WeatherApiInterface
 {

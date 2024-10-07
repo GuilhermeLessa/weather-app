@@ -117,6 +117,12 @@ If something gets wrong you must clean all to try reinstall:
               opcao tamanho dos icones
               salvar log quando erro exception generica
               habilitar test coverage: php artisan test --coverage
+              melhorar get weatherApi, mais generico e com destructuring de params
+              implementar tratamentos api open weather (401 invalid key, etc)
+              criar testes isolados apenas pra api (request pura sem weatherResponse)
+              definir ordem de execucao dos testes (response > api > forecast), parar no primeiro?
+              tipar as temperaturas do response como decimal
+              melhorar os validators dos testes (exe: required, etc)
 
               front:
               criar server statico pro frontend (nao servir como dev)

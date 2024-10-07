@@ -64,4 +64,5 @@ class ForecastRepository implements ForecastRepositoryInterface
         $forecast->save();
         return $forecast;
     }
+    
 }
