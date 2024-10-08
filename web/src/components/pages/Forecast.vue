@@ -51,7 +51,7 @@ async function inactivate(uuid) {
     }
 
     forecasts.value = forecasts.value.filter(f => f.uuid != uuid);
-    toaster.value.success("Weather forecast removed.")
+    toaster.value.success("Weather forecast removed.");
 }
 </script>
 

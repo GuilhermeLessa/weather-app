@@ -12,7 +12,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://api.openweathermap.org/data/2.5/weather?q=sao paulo,brasil&appid={{apiKey}}",
+					"raw": "https://api.openweathermap.org/data/2.5/weather?q=Dallas,US&appid={{apiKey}}",
 					"protocol": "https",
 					"host": [
 						"api",
@@ -27,7 +27,7 @@
 					"query": [
 						{
 							"key": "q",
-							"value": "sao paulo,brasil"
+							"value": "Dallas,US"
 						},
 						{
 							"key": "appid",

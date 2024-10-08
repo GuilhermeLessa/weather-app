@@ -68,9 +68,9 @@ class ForecastControllerFindTest extends TestCaseWithApi
     {
         $user = User::factory()->create();
 
-        $response1 = $this->find("New York", "US", $user);
-        $response2 = $this->find("Colorado", "US", $user);
-        $response3 = $this->find("San Diego", "US", $user);
+        $this->find("New York", "US", $user);
+        $this->find("Colorado", "US", $user);
+        $this->find("San Diego", "US", $user);
 
         $response4 = $this->find("San Diego", "US", $user);
         $response4->assertInternalServerError();

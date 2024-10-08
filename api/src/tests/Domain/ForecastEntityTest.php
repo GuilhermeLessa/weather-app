@@ -41,9 +41,9 @@ class ForecastEntityTest extends TestCase
         $weatherApi = new OpenWeatherApi(env("OPEN_WEATHER_MAP_API_KEY"));
         $forecastRepository = new ForecastRepository($testerUser->id);
 
-        $forecast1 = new Forecast($weatherApi, $forecastRepository, "New York", "US");
-        $forecast2 = new Forecast($weatherApi, $forecastRepository, "Colorado", "US");
-        $forecast3 = new Forecast($weatherApi, $forecastRepository, "Milwaukee", "US");
+        new Forecast($weatherApi, $forecastRepository, "New York", "US");
+        new Forecast($weatherApi, $forecastRepository, "Colorado", "US");
+        new Forecast($weatherApi, $forecastRepository, "Milwaukee", "US");
 
         $this->expectException(MaximumForecastReached::class);
         $forecast4 = new Forecast($weatherApi, $forecastRepository, "Rio de Janeiro", "BR");
@@ -56,7 +56,7 @@ class ForecastEntityTest extends TestCase
         $forecastRepository = new ForecastRepository($testerUser->id);
 
         $this->expectException(CityIsNotDefined::class);
-        $forecast = new Forecast($weatherApi, $forecastRepository, "", "US");
+        new Forecast($weatherApi, $forecastRepository, "", "US");
     }
 
     public function test_country_name_required(): void
@@ -66,7 +66,7 @@ class ForecastEntityTest extends TestCase
         $forecastRepository = new ForecastRepository($testerUser->id);
 
         $this->expectException(CountryIsNotDefined::class);
-        $forecast = new Forecast($weatherApi, $forecastRepository, "New York", "");
+        new Forecast($weatherApi, $forecastRepository, "New York", "");
     }
 
     public function test_city_not_found(): void
@@ -76,7 +76,7 @@ class ForecastEntityTest extends TestCase
         $forecastRepository = new ForecastRepository($testerUser->id);
 
         $this->expectException(CityNotFound::class);
-        $forecast = new Forecast($weatherApi, $forecastRepository, "abcdefghijk", "US");
+        new Forecast($weatherApi, $forecastRepository, "abcdefghijk", "US");
     }
 
     public function test_saved_forecast_valid_types(): void

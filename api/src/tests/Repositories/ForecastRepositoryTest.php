@@ -84,9 +84,9 @@ class ForecastRepositoryTest extends TestCase
         //creating 3 actives
         $testerUser1 = User::factory()->create();
         $repository1 = new ForecastRepository($testerUser1->id);
-        $forecastModel1 = $repository1->save($weatherResponse);
-        $forecastModel2 = $repository1->save($weatherResponse);
-        $forecastModel3 = $repository1->save($weatherResponse);
+        $repository1->save($weatherResponse);
+        $repository1->save($weatherResponse);
+        $repository1->save($weatherResponse);
 
         //creating 2 inactives, should not count inactives
         $forecastModel4 = $repository1->save($weatherResponse);
@@ -99,8 +99,8 @@ class ForecastRepositoryTest extends TestCase
         //creating to other user, counter should not be affected through different users
         $testerUser2 = User::factory()->create();
         $repository2 = new ForecastRepository($testerUser2->id);
-        $forecastModel6 = $repository2->save($weatherResponse);
-        $forecastModel7 = $repository2->save($weatherResponse);
+        $repository2->save($weatherResponse);
+        $repository2->save($weatherResponse);
 
         $this->assertEquals($repository1->countActives(), 3);
         $this->assertEquals($repository2->countActives(), 2);
@@ -114,14 +114,14 @@ class ForecastRepositoryTest extends TestCase
         //creating 2 actives
         $testerUser1 = User::factory()->create();
         $repository1 = new ForecastRepository($testerUser1->id);
-        $forecastModel1 = $repository1->save($weatherResponse);
-        $forecastModel2 = $repository1->save($weatherResponse);
+        $repository1->save($weatherResponse);
+        $repository1->save($weatherResponse);
 
         //creating to other user, should inactivate only to first user
         $testerUser2 = User::factory()->create();
         $repository2 = new ForecastRepository($testerUser2->id);
-        $forecastModel3 = $repository2->save($weatherResponse);
-        $forecastModel4 = $repository2->save($weatherResponse);
+        $repository2->save($weatherResponse);
+        $repository2->save($weatherResponse);
 
         $this->assertEquals($repository1->countActives(), 2);
         $this->assertEquals($repository2->countActives(), 2);
@@ -140,13 +140,13 @@ class ForecastRepositoryTest extends TestCase
         //creating 1 record to city 1
         $weatherResponseData1 = FakeWeatherResponseData::get("New York", "US");
         $weatherResponse1 = new OpenWeatherResponse($weatherResponseData1);
-        $forecastModel1 = $repository->save($weatherResponse1);
+        $repository->save($weatherResponse1);
 
         //creating 2 records to city 2
         $weatherResponseData2 = FakeWeatherResponseData::get("Colorado", "US");
         $weatherResponse2 = new OpenWeatherResponse($weatherResponseData2);
-        $forecastModel2 = $repository->save($weatherResponse2);
-        $forecastModel3 = $repository->save($weatherResponse2);
+        $repository->save($weatherResponse2);
+        $repository->save($weatherResponse2);
 
         $this->assertEquals($repository->countActives(), 3);
         $repository->inactivateAll("New York", "US");
@@ -190,8 +190,8 @@ class ForecastRepositoryTest extends TestCase
         $repository2 = new ForecastRepository($testerUser2->id);
 
         //creating 2 actives
-        $forecastModel1 = $repository1->save($weatherResponse);
-        $forecastModel2 = $repository1->save($weatherResponse);
+        $repository1->save($weatherResponse);
+        $repository1->save($weatherResponse);
 
         //creating 2 inactives
         $forecastModel3 = $repository1->save($weatherResponse);
@@ -203,8 +203,8 @@ class ForecastRepositoryTest extends TestCase
         $forecastModel4->save();
 
         //creating 2 actives to a second user
-        $forecastModel5 = $repository2->save($weatherResponse);
-        $forecastModel6 = $repository2->save($weatherResponse);
+        $repository2->save($weatherResponse);
+        $repository2->save($weatherResponse);
 
         //creating 2 inactives to a second user
         $forecastModel7 = $repository2->save($weatherResponse);

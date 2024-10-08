@@ -43,10 +43,12 @@
 
 # Running automated tests
 
+       Take a look on test coverage results in /test-coverage-result/index.html
+
        After run up the backend containers, run this command on CLI:
 
               docker exec weather-php php artisan test
-              docker exec weather-php php artisan test --coverage-html=coverage
+              docker exec weather-php php artisan test --coverage-html=test-coverage-result
        
        Know that tests will erase all database, to recover state just run seeds again:
 

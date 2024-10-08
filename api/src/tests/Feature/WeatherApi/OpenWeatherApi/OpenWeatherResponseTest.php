@@ -24,7 +24,7 @@ class OpenWeatherResponseTest extends TestCase
     public function test_weather_response_malformed(): void
     {
         $this->expectException(MalformedResponseData::class);
-        $weatherResponse = new OpenWeatherResponse([]);
+        new OpenWeatherResponse([]);
     }
 
     public function test_weather_response_get_data(): void

@@ -40,7 +40,7 @@ class OpenWeatherApiTest extends TestCase
         $weatherApi = new OpenWeatherApi(env("OPEN_WEATHER_MAP_API_KEY"));
 
         $this->expectException(CityIsNotDefined::class);
-        $weatherResponse = $weatherApi->getWeather("", "US");
+        $weatherApi->getWeather("", "US");
     }
 
     public function test_country_name_required(): void
@@ -48,7 +48,7 @@ class OpenWeatherApiTest extends TestCase
         $weatherApi = new OpenWeatherApi(env("OPEN_WEATHER_MAP_API_KEY"));
 
         $this->expectException(CountryIsNotDefined::class);
-        $weatherResponse = $weatherApi->getWeather("New York", "");
+        $weatherApi->getWeather("New York", "");
     }
 
     public function test_weather_response_get_data(): void

@@ -205,7 +205,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{apiUrl}}/api/forecast?city=Philadelphia&country=us",
+					"raw": "{{apiUrl}}/api/forecast?city=Dallas&country=US",
 					"host": [
 						"{{apiUrl}}"
 					],
@@ -216,11 +216,11 @@
 					"query": [
 						{
 							"key": "city",
-							"value": "Philadelphia"
+							"value": "Dallas"
 						},
 						{
 							"key": "country",
-							"value": "us"
+							"value": "US"
 						}
 					]
 				}
@@ -251,7 +251,7 @@
 					"variable": [
 						{
 							"key": "uuid",
-							"value": "9df49acd-a849-4f7c-99f2-785feb10d2a9"
+							"value": "27bd9eed-1cfe-4316-9020-8b0e1cdc444a"
 						}
 					]
 				}
