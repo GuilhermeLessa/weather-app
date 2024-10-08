@@ -21,7 +21,7 @@
 
 # Ready to go
 
-       That's all you need to access the application on browser: http://localhost:5173
+       That's all you need to access the application on browser: http://localhost:5173.
        Users to login and test:
 
               email:        admin@admin.com
@@ -43,7 +43,7 @@
 
 # Running automated tests
 
-       Take a look on test coverage results in /test-coverage-result/index.html
+       Take a look on test coverage results in /test-coverage-result/index.html.
 
        After run up the backend containers, run this command on CLI:
 
@@ -53,6 +53,12 @@
        Know that tests will erase all database, to recover state just run seeds again:
 
               docker exec weather-php php artisan db:seed
+
+
+
+# Testing enpoints with postman
+
+       Theres complete postman collections on folder /postman, you can import. 
 
 
 
