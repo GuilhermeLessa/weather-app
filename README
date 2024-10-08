@@ -5,6 +5,7 @@
 
               docker-compose build
               docker-compose up
+              docker exec weather-php composer install
               docker exec weather-php php artisan migrate
               docker exec weather-php php artisan db:seed
 
