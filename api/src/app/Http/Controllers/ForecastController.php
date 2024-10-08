@@ -51,7 +51,8 @@ class ForecastController extends Controller
     }
 
     public function find(Request $request): JsonResponse
-    {
+    {   
+
         $request->validate([
             'city' => 'required',
             'country' => 'required',

@@ -4,9 +4,9 @@ namespace Tests\Controllers\ForecastController;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\TestCase;
+use Tests\Resources\TestCaseWithApi;
 
-class ForecastControllerInactivateTest extends TestCase
+class ForecastControllerInactivateTest extends TestCaseWithApi
 {
     use RefreshDatabase;
 
@@ -14,36 +14,15 @@ class ForecastControllerInactivateTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=San Diego&country=US');
-        $response->assertOk();
-
+        $response = $this->find("San Diego", "US", $user);
         $data = $response->json();
-        $this->assertIsArray($data);
         $uuid = $data['uuid'];
 
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast/list');
-        $response->assertOk();
-
-        $data = $response->json();
-        $this->assertIsArray($data);
-        $this->assertCount(1, $data);
-
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->delete("/api/forecast/{$uuid}");
+        $response = $this->inactivate($uuid, $user);
         $response->assertNoContent();
 
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast/list');
-        $response->assertOk();
-
+        $response = $this->list($user);
         $data = $response->json();
-        $this->assertIsArray($data);
         $this->assertCount(0, $data);
     }
 
@@ -51,43 +30,20 @@ class ForecastControllerInactivateTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=San Diego&country=US');
-        $response->assertOk();
-
+        $response = $this->find("San Diego", "US", $user);
         $data = $response->json();
-        $this->assertIsArray($data);
         $uuid = $data['uuid'];
 
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast/list');
-        $response->assertOk();
-
-        $data = $response->json();
-        $this->assertIsArray($data);
-        $this->assertCount(1, $data);
-
         //official inactivation
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->delete("/api/forecast/{$uuid}");
+        $response = $this->inactivate($uuid, $user);
         $response->assertNoContent();
 
         //inactivating an already inactivated uuid
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->delete("/api/forecast/{$uuid}");
+        $response = $this->inactivate($uuid, $user);
         $response->assertNoContent();
 
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast/list');
-        $response->assertOk();
-
+        $response = $this->list($user);
         $data = $response->json();
-        $this->assertIsArray($data);
         $this->assertCount(0, $data);
     }
 
@@ -95,12 +51,14 @@ class ForecastControllerInactivateTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $uuid = "27bd9eed-1cfe-4316-9020-8b0e1cdc444a";
-
         //its already inactivated uuid
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->delete("/api/forecast/{$uuid}");
+        $uuid = "27bd9eed-1cfe-4316-9020-8b0e1cdc444a";
+        $response = $this->inactivate($uuid, $user);
         $response->assertNoContent();
+
+        $response = $this->list($user);
+        $data = $response->json();
+        $this->assertCount(0, $data);
     }
+
 }

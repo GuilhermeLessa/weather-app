@@ -46,6 +46,7 @@
        After run up the backend containers, run this command on CLI:
 
               docker exec weather-php php artisan test
+              docker exec weather-php php artisan test --coverage-html=coverage
        
        Know that tests will erase all database, to recover state just run seeds again:
 
@@ -78,6 +79,7 @@
        Redirect not found urls typed on browser bar
        Remove seconds of time format on view
        Improve return types, either and error controlling of weather api adapter
+       Keep the same height all forecast cards when icon demands less high
 
 
 
@@ -156,6 +158,12 @@
        How to attach on container bash:
 
               docker exec -it weather-php bash
+
+       How run test cases:
+
+              docker exec weather-php php artisan test
+
+              docker exec weather-php php artisan test --coverage-html=coverage
 
 
        Steps to install laravel sanctum:

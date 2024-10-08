@@ -4,25 +4,19 @@ namespace Tests\Controllers\ForecastController;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Facades\Validator;
+use Tests\Resources\TestCaseWithApi;
 
-class ForecastControllerFindTest extends TestCase
+class ForecastControllerFindTest extends TestCaseWithApi
 {
     use RefreshDatabase;
 
     public function test_find_forecast_without_city(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?country=US');
-
-        $data = $response->json();
-
+        $response = $this->find("", "US");
         $response->assertUnprocessable();
 
+        $data = $response->json();
         $this->assertIsArray($data);
         $this->assertIsArray($data['errors']);
         $this->assertEquals($data['message'], "The city field is required.");
@@ -30,16 +24,10 @@ class ForecastControllerFindTest extends TestCase
 
     public function test_find_forecast_without_country(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York');
-
-        $data = $response->json();
-
+        $response = $this->find("New York", "");
         $response->assertUnprocessable();
 
+        $data = $response->json();
         $this->assertIsArray($data);
         $this->assertIsArray($data['errors']);
         $this->assertEquals($data['message'], "The country field is required.");
@@ -47,16 +35,10 @@ class ForecastControllerFindTest extends TestCase
 
     public function test_find_forecast_without_city_and_without_country(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast');
-
-        $data = $response->json();
-
+        $response = $this->find("", "");
         $response->assertUnprocessable();
 
+        $data = $response->json();
         $this->assertIsArray($data);
         $this->assertIsArray($data['errors']);
         $this->assertEquals($data['message'], "The city field is required. (and 1 more error)");
@@ -64,32 +46,20 @@ class ForecastControllerFindTest extends TestCase
 
     public function test_find_forecast_city_not_found(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=ABCDEFGH&country=US');
-
-        $data = $response->json();
-
+        $response = $this->find("ABCDEFGH", "US");
         $response->assertNotFound();
 
+        $data = $response->json();
         $this->assertIsArray($data);
         $this->assertEquals($data['message'], "City not found.");
     }
 
     public function test_find_forecast_country_not_found(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=XY');
-
-        $data = $response->json();
-
+        $response = $this->find("New York", "XY");
         $response->assertNotFound();
 
+        $data = $response->json();
         $this->assertIsArray($data);
         $this->assertEquals($data['message'], "City not found.");
     }
@@ -98,30 +68,14 @@ class ForecastControllerFindTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response1 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=US');
+        $response1 = $this->find("New York", "US", $user);
+        $response2 = $this->find("Colorado", "US", $user);
+        $response3 = $this->find("San Diego", "US", $user);
 
-        $response2 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=Colorado&country=US');
-
-        $response3 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=San Diego&country=US');
-
-        $response1->assertOk();
-        $response2->assertOk();
-        $response3->assertOk();
-
-        $response4 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=San Diego&country=US');
-
+        $response4 = $this->find("San Diego", "US", $user);
         $response4->assertInternalServerError();
 
         $data = $response4->json();
-
         $this->assertIsArray($data);
         $this->assertEquals($data['message'], "Maximum number of forecast reached.");
     }
@@ -130,25 +84,11 @@ class ForecastControllerFindTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response1 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=US');
-
-        $response2 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=US');
-
-        $response3 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=US');
-
-        $response4 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=US');
-
-        $response5 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=US');
+        $response1 = $this->find("New York", "US", $user);
+        $response2 = $this->find("New York", "US", $user);
+        $response3 = $this->find("New York", "US", $user);
+        $response4 = $this->find("New York", "US", $user);
+        $response5 = $this->find("New York", "US", $user);
 
         $response1->assertOk();
         $response2->assertOk();
@@ -159,13 +99,10 @@ class ForecastControllerFindTest extends TestCase
 
     public function test_find_forecast_check_types(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=US');
+        $response = $this->find("New York", "US");
 
         $data = $response->json();
+        $this->assertIsArray($data);
 
         $validator = Validator::make($data, [
             'uuid' => 'uuid',
@@ -180,25 +117,17 @@ class ForecastControllerFindTest extends TestCase
             'humidity' => 'integer',
             'wind' => 'decimal:0,2'
         ]);
-
         $this->assertEquals(count($validator->validate()), count($data));
-
-        $this->assertIsArray($data);
     }
 
     public function test_find_forecast_check_content(): void
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=US');
+        $response = $this->find("New York", "US");
 
         $data = $response->json();
-
+        $this->assertIsArray($data);
         $this->assertEquals($data['city'], "New York");
         $this->assertEquals($data['country'], "US");
-
-        $this->assertIsArray($data);
     }
+
 }

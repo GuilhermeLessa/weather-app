@@ -4,10 +4,10 @@ namespace Tests\Controllers\ForecastController;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Facades\Validator;
+use Tests\Resources\TestCaseWithApi;
 
-class ForecastControllerListTest extends TestCase
+class ForecastControllerListTest extends TestCaseWithApi
 {
     use RefreshDatabase;
 
@@ -15,61 +15,12 @@ class ForecastControllerListTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response1 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=US');
+        $response = $this->find("New York", "US", $user);
+        $response = $this->find("San Diego", "US", $user);
+        $response = $this->find("Milwaukee", "US", $user);
 
-        $response2 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=San Diego&country=US');
-
-        $response3 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=Milwaukee&country=US');
-
-        $response1->assertOk();
-        $response2->assertOk();
-        $response3->assertOk();
-
-        $response4 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast/list');
-
-        $response4->assertOk();
-
-        $data = $response4->json();
-        $this->assertIsArray($data);
-        $this->assertCount(3, $data);
-    }
-
-    public function test_count_list_forecast_multi_user(): void
-    {
-        $user = User::factory()->create();
-
-        $response1 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=US');
-
-        $response2 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=San Diego&country=US');
-
-        $response3 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=Milwaukee&country=US');
-
-        $response1->assertOk();
-        $response2->assertOk();
-        $response3->assertOk();
-
-        $response4 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast/list');
-
-        $response4->assertOk();
-
-        $data = $response4->json();
-        $this->assertIsArray($data);
+        $response = $this->list($user);
+        $data = $response->json();
         $this->assertCount(3, $data);
     }
 
@@ -77,15 +28,10 @@ class ForecastControllerListTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=US');
+        $response = $this->find("New York", "US", $user);
 
-        $response2 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast/list');
-
-        $data = $response2->json();
+        $response = $this->list($user);
+        $data = $response->json();
 
         $this->assertIsArray($data);
         $this->assertIsArray($data[0]);
@@ -111,22 +57,16 @@ class ForecastControllerListTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast?city=New York&country=US');
+        $response = $this->find("New York", "US", $user);
 
-        $response2 = $this->actingAs($user)
-            ->withHeader("Accept", "application/json")
-            ->get('/api/forecast/list');
-
-        $data = $response2->json();
+        $response = $this->list($user);
+        $data = $response->json();
 
         $this->assertIsArray($data);
         $this->assertIsArray($data[0]);
 
         $this->assertEquals($data[0]['city'], "New York");
         $this->assertEquals($data[0]['country'], "US");
-
-        $this->assertIsArray($data);
     }
+
 }
